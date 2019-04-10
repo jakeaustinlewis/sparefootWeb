@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { getAnimals } from '../../store/animals/actions';
+import styles from './animals.module.css';
 
 class Animals extends PureComponent {
 	componentDidMount() {
@@ -11,8 +12,10 @@ class Animals extends PureComponent {
 		return (
 			<div>
 				<h1>Animal Adoption Center</h1>
-				{this.props.animals.map(a => (
-					<div style={{border:'1px solid black'}} className='panel'>{JSON.stringify(a, null, 2)}</div>
+				{this.props.animals.map((animal, index) => (
+					<li key={index}>
+						<div className={`panel borders`}>{JSON.stringify(animal, null, 2)}</div>
+					</li>
 				))}
 			</div>
 		);
