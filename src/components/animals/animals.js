@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { getAnimals } from '../../store/animals/actions';
-// import styles from './animals.module.css';
+import './animals.module.css';
 
 class Animals extends PureComponent {
 	componentDidMount() {
@@ -10,12 +10,28 @@ class Animals extends PureComponent {
 	
 	render() {
 		return (
-			<div>
+			<div className='bodyContainer'>
 				<h1>Animal Adoption Center</h1>
 				{this.props.animals.map((animal, index) => (
-					<li key={index}>
-						<div className={`panel borders`}>{JSON.stringify(animal, null, 2)}</div>
-					</li>
+					<section key={index} className='card'>
+						<div className='topCardContainer'>
+
+							<div className='row'>
+								{/* <div className='imgCenter'> */}
+									<img className='col imgBorder' src={animal.image} />
+								{/* </div> */}
+								<div className='col'>
+									<div className='petName'>{animal.name} </div>
+								</div>
+							</div>
+
+							<div className='adoptButtonContainer'>
+								<button>Adopt {animal.name} today for MONEY AMOUNT</button>
+							</div>
+						</div>
+
+					</section>
+						// <div className={`panel borders hello hi`}>{JSON.stringify(animal, null, 2)}</div>
 				))}
 			</div>
 		);

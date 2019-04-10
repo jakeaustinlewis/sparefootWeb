@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import promiseMiddleware from 'redux-promise';
 import { Router, Route, browserHistory } from 'react-router';
 import Animals from './components/animals/animals';
-import './global.css';
+import './global.scss';
 import defaultReducer from './store/reducers';
 
 const logger = createLogger();

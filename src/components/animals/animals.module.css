@@ -1,5 +1,9 @@
-@import "../../global.css";
+@import "../../global.scss";
 
 .borders {
     border: 1px solid black;
+}
+
+.hi {
+    margin: 40px;
 }
