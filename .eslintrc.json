@@ -1,0 +1,38 @@
+{
+    "extends": "airbnb",
+    "env": {
+      "browser": true
+    },
+    "rules": {
+      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+      "no-underscore-dangle": 0,
+      "react/prop-types": 0,
+      "jsx-quotes": ["error", "prefer-single"],
+      "react/destructuring-assignment": ["enabled", "never"],
+      "max-len": ["error", { "code": 300 }],
+      "react/jsx-one-expression-per-line": ["enabled", { "allow": "none" }],
+      "react/prefer-stateless-function": "off",
+      "react/no-array-index-key": "off",
+      "object-curly-newline": "off",
+      "arrow-parens": "off",
+      "lines-between-class-members": "off",
+      "import/no-extraneous-dependencies": "off",
+      "react/sort-comp": "off",
+      "class-methods-use-this": "off",
+      "radix": "off",
+      "react/no-multi-comp": ["enabled", { "ignoreStateless": "boolean" }],
+      "jsx-a11y/no-noninteractive-element-interactions": [
+        "error",
+        {
+          "handlers": [
+            "onClick",
+            "onMouseDown",
+            "onMouseUp",
+            "onKeyPress",
+            "onKeyDown",
+            "onKeyUp"
+          ]
+        }
+      ]
+    }
+  }

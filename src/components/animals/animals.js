@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { getAnimals } from '../../store/animals/actions';
-import styles from './animals.module.css';
+// import styles from './animals.module.css';
 
 class Animals extends PureComponent {
 	componentDidMount() {

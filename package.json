@@ -26,6 +26,9 @@
     "request-promise": "^4.1.1"
   },
   "scripts": {
+    "pretest": "eslint --ignore-path .gitignore .",
+    "fixLint": "npm run pretest -- --fix",
+    "pre-commit": "cp .git/hooks/pre-commit.sample .git/hooks/pre-commit",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject"
