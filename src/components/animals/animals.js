@@ -21,11 +21,15 @@ class Animals extends PureComponent {
 										<img className={`${styles.imgBorder}`} src={animal.image} />
 									</div>
 									<div className='col'>
-										<div className={`${styles.petName}`}>{animal.name} </div>
+										<h4 className={`${styles.petName}`}>{`${animal.name.charAt(0).toUpperCase()}${animal.name.slice(1)}`}</h4>
+										<p>{animal.gender}</p>
+										<p>{animal.breed}</p>
+										<p>{animal.breed}</p>
+										<p>{animal.age}</p>
 									</div>
 								</div>
 								<div className={`${styles.adoptButtonContainer}`}>
-									<button>Adopt {animal.name} today for MONEY AMOUNT</button>
+									<button>Adopt {animal.name} today for ${animal.price}</button>
 								</div>
 							</div>
 						<div className={`${styles.bottomCardContainer}`}>

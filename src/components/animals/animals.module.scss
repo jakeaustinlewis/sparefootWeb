@@ -37,6 +37,12 @@
 
 .petName {
 	font-size: 22px;
+	margin: 0 0 15px 0;
+	font-weight: normal;
+	>p {
+		font-size: 12px;
+		margin: 0;
+	}
 }
 
 .card {
