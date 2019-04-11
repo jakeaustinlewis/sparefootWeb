@@ -11,15 +11,17 @@ class Animals extends PureComponent {
 	getAge(age) {
 
 	}
+
+	capitolize(str) {
+		let splitStr = str.toLowerCase().split(' ');
+		for (let i = 0; i<splitStr.length; i++) {
+			splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+		}
+		return splitStr.join(' ');
+	}
 	
 	render() {
 
-		// let time = animal.age;
-		// let years = Math.floor(animal.age);
-		// let months = Math.floor((animal.age * 365) - (Math.floor(animal.age/365))/30);
-
-		// let years = Math.floor(animal.age);
-		// let month = (animal.age - Math.floor)
 		return (
 			<div className={`${styles.bodyContainer}`}>
 				<div>
@@ -30,13 +32,13 @@ class Animals extends PureComponent {
 								<div className='row'>
 									<div className='col'>
 										<img className={`${styles.imgBorder}`} src={require(`../../../public/images/${animal.image}`)} />
-										{/* <img className={`${styles.imgBorder}`} src={require() animal.image} /> */}
 									</div>
 									<div className='col'>
 										<div className={styles.petName}>
-											<h4 className={``}>{`${animal.name.charAt(0).toUpperCase()}${animal.name.slice(1)}`}</h4>
-											<p>{animal.gender}</p>
-											<p>{animal.breed}</p>
+											{/* <h4 className={``}>{`${animal.name.charAt(0).toUpperCase()}${animal.name.slice(1)}`}</h4> */}
+											<h4 className={``}>{this.capitolize(animal.name)}</h4>
+											<p>{this.capitolize(animal.gender)}</p>
+											<p>{this.capitolize(animal.breed)}</p>
 											<p>{`${Math.floor(animal.age)} year, ${Math.floor((animal.age - Math.floor(animal.age))*12)}, months`}</p>
 										</div>
 									</div>
