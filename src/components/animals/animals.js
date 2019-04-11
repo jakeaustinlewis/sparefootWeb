@@ -11,15 +11,16 @@ class Animals extends PureComponent {
 	render() {
 		return (
 			<div className='bodyContainer'>
+				<div>
 				<h1>Animal Adoption Center</h1>
 				{this.props.animals.map((animal, index) => (
 					<section key={index} className='card'>
 						<div className='topCardContainer'>
 
 							<div className='row'>
-								{/* <div className='imgCenter'> */}
-									<img className='col imgBorder' src={animal.image} />
-								{/* </div> */}
+								<div className='col'>
+									<img className='imgBorder' src={animal.image} />
+								</div>
 								<div className='col'>
 									<div className='petName'>{animal.name} </div>
 								</div>
@@ -29,10 +30,13 @@ class Animals extends PureComponent {
 								<button>Adopt {animal.name} today for MONEY AMOUNT</button>
 							</div>
 						</div>
+						<div className='bottomCardContainer'>
+						</div>
 
 					</section>
 						// <div className={`panel borders hello hi`}>{JSON.stringify(animal, null, 2)}</div>
 				))}
+				</div>
 			</div>
 		);
 	}

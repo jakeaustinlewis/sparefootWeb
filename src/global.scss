@@ -8,8 +8,6 @@ body {
 	margin-bottom: 10px;
 }
 
-
-
 .bodyContainer {
   padding: 15px;
 }
@@ -21,15 +19,12 @@ body {
   flex-direction: column;
   word-wrap: break-word;
   background-color: white;
-  // border: 2px solid white;
   border: 1px solid #CACACA;
   // padding: 15px;
   margin-bottom: 10px;
 }
 .row {
   display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
   margin-right: -15px;
   margin-left: -15px;
 }
@@ -41,12 +36,13 @@ body {
 }
 
 .topCardContainer {
+  width: 100%;
   border-bottom: 1px solid #DEDECB;
-  padding: 15px;
-
+  padding: 15px 15px;
 }
 
 .bottomCardContainer {
+  width: 100%;
   margin-bottom: 30px
 }
 
@@ -62,7 +58,7 @@ body {
 .imgBorder {
   border: 1px solid black;
   height: 100px;
-  // width: 50%;
+  width: 100%;
 }
 
 .imgCenter {
@@ -75,8 +71,15 @@ body {
 }
 
 @media (min-width: 30em) {
+  .bodyContainer {
+    display: flex;
+    justify-content: center;
+    > div {
+      width: 90%;
+    }
+  }
+
   .card {
-    width: 80%;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -94,5 +97,16 @@ body {
     border: 1px solid black;
     height: 60px;
     width: 60px;
+  }
+
+  .topCardContainer {
+    width: 33.33%;
+    border-bottom: 1px solid #DEDECB;
+    padding: 15px 15px;
+  }
+
+  .bottomCardContainer {
+    width: 66.66%;
+    margin-bottom: 30px
   }
 }
