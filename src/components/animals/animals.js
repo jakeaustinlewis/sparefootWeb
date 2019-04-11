@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { getAnimals } from '../../store/animals/actions';
-import './animals.module.css';
+import styles from './animals.module.scss';
 
 class Animals extends PureComponent {
 	componentDidMount() {
@@ -10,7 +10,7 @@ class Animals extends PureComponent {
 	
 	render() {
 		return (
-			<div className='bodyContainer'>
+			<div className={`bodyContainer ${styles.hi}`}>
 				<div>
 				<h1>Animal Adoption Center</h1>
 				{this.props.animals.map((animal, index) => (
