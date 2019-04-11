@@ -8,19 +8,6 @@ body {
 	margin-bottom: 10px;
 }
 
-.bodyContainer {
-  padding: 15px;
-}
-
-.card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  word-wrap: break-word;
-  background-color: white;
-  border: 1px solid #CACACA;
-  margin-bottom: 10px;
-}
 .row {
   display: flex;
   margin-right: -15px;
@@ -33,78 +20,6 @@ body {
   padding-left: 15px;
 }
 
-.topCardContainer {
-  width: 100%;
-  border-bottom: 1px solid #DEDECB;
-  padding: 15px 15px;
-}
-
-.bottomCardContainer {
-  width: 100%;
-  margin-bottom: 30px
-}
-
-.adoptButtonContainer {
-  display: flex;
-  justify-content: center;
-}
-
 .flex {
   display: flex;
-}
-
-.imgBorder {
-  border: 1px solid black;
-  height: 100px;
-  width: 100%;
-}
-
-.imgCenter {
-  display: flex;
-  justify-content: center;
-}
-
-.petName {
-  font-size: 22px;
-}
-
-@media (min-width: 30em) {
-  .bodyContainer {
-    display: flex;
-    justify-content: center;
-    > div {
-      width: 90%;
-    }
-  }
-
-  .card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    word-wrap: break-word;
-    background-color: white;
-  }
-
-  .borders {
-    border: 1px solid black;
-    padding: 15px;
-    margin-bottom: 10px;
-  }
-
-  .imgBorder {
-    border: 1px solid black;
-    height: 60px;
-    width: 60px;
-  }
-
-  .topCardContainer {
-    width: 33.33%;
-    border-bottom: 1px solid #DEDECB;
-    padding: 15px 15px;
-  }
-
-  .bottomCardContainer {
-    width: 66.66%;
-    margin-bottom: 30px
-  }
 }
