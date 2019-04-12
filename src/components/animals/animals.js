@@ -3,13 +3,56 @@ import { connect } from 'react-redux';
 import { getAnimals } from '../../store/animals/actions';
 import styles from './animals.module.scss';
 
+// const dropdownLookUp = {
+//   openEnded: 'age ascending',
+//   multiSelect: 'Checkboxes',
+//   multiChoice: 'Multiple Choice',
+// };
+
 class Animals extends PureComponent {
+	constructor(props) {
+    super(props);
+    this.state = {
+			dropdown: 'Default Sort',
+      clickDropdown: false,
+		};
+		this.handleDropdownClick = this.handleDropdownClick.bind(this);
+  }
 	componentDidMount() {
+		document.addEventListener('mousedown', this.handleClickaway, false);
 		this.props.getAnimals();
 	}
 
-	getAge(age) {
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickaway, false);
+	}
 
+	handleClickaway(e) {
+    // let clickedDropDown = false;
+    // const refValues = Object.values(this.refs);
+    // refValues.forEach(button => {
+    //   if (button.contains(e.target)) {
+    //     clickedDropDown = true;
+    //   }
+    // });
+
+    // if (!clickedDropDown) {
+    //   this.setState({ clickDropdown: false });
+		// }
+		console.log('refs: ', this.refs);
+	}
+
+	handleDropdownClick(e) {
+		this.setState({ clickDropdown: true }, ()=> console.log('dropdown: ',this.state.clickDropdown));
+
+	}
+
+	closeDropdown(e, dropdownOption) {
+		e.preventDefault();
+		this.setState({
+			clickDropdown: false,
+			dropdown: dropdownOption,
+		}, ()=> console.log('state: ',this.state));
 	}
 
 	capitolize(str) {
@@ -26,6 +69,25 @@ class Animals extends PureComponent {
 			<div className={`${styles.bodyContainer}`}>
 				<div>
 				<h1>Animal Adoption Center</h1>
+				{ !this.state.clickDropdown
+				? (
+					<button ref={this.props.onMounted} onClick={(e) => this.handleDropdownClick(e)} className={`${styles.dropdownButton}`}>{this.state.dropdown}</button>
+				)
+				: (
+					<section className={styles.dropdownSpacing}>
+						<ul className={`${styles.dropdownContainer}`}>
+							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.closeDropdown(e, 'Age Ascending')}>
+								<div>Age Ascending</div>
+							</li>
+							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.closeDropdown(e, 'Weight Ascending')}>
+								<div>Weight Ascending</div>
+							</li>
+							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.closeDropdown(e, 'Price Ascending')}>
+								<div>Price Ascending</div>
+							</li>
+						</ul>
+					</section>
+				)}
 				{this.props.animals.map((animal, index) => (
 					<section key={index} className={[animal.species === 'cat' ? `${styles.catRowDirection}` : `${styles.dogRowDirection}`, `${styles.card}`].join(' ')}>
 							<div className={`${styles.topCardContainer}`}>

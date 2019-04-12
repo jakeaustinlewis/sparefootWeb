@@ -30,6 +30,18 @@
 	justify-content: center;
 }
 
+.dropdownButton {
+	width: 300px;
+	background: $button-blue;
+	color: white;
+	cursor: pointer;
+	line-height: 2.5;
+	text-align: center;
+	border-radius: .25rem;
+	margin-bottom: 30px;
+	margin-top: 15px;
+}
+
 .imgBorder {
 	object-fit: contain;
 	width: 100%;
@@ -44,7 +56,6 @@
 	text-align: center;
 	border-radius: .25rem;
 	margin-top: 30px;
-
 }
 
 .petName {
@@ -67,6 +78,37 @@
   background-color: white;
   border: 1px solid #CACACA;
   margin-bottom: 30px;
+}
+
+.dropdownOptions {
+	width: 100%;
+	border: transparent 1px solid;
+  display: flex;
+  align-items: center;
+  // justify-content: space-between;
+  background: #ffffff;
+  height: 40px;
+  cursor: pointer;
+  box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 5px 5px -3px rgba(0,0,0,0.2);
+}
+
+.dropdownContainer {
+	z-index: 1;
+	position: absolute;
+	cursor: pointer;
+
+	width: 300px;
+	// background: $button-blue;
+	cursor: pointer;
+	line-height: 2.5;
+	text-align: center;
+	margin-bottom: 30px;
+	margin-top: 15px;
+	padding: 0;
+}
+
+.dropdownSpacing {
+	height: 77px;
 }
 
 
