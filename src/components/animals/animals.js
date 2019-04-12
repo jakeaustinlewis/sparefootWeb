@@ -41,7 +41,6 @@ class Animals extends PureComponent {
 
 	handleDropdownClick(e) {
 		this.setState({ clickDropdown: true }, ()=> console.log('dropdown: ',this.state.clickDropdown));
-
 	}
 
 	closeDropdown(e, sortBy) {
@@ -53,31 +52,23 @@ class Animals extends PureComponent {
 	}
 
 	capitolize(str) {
-		let splitStr = str.toLowerCase().split(' ');
-		for (let i = 0; i<splitStr.length; i++) {
-			splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);
+		let strSplit = str.toLowerCase().split(' ');
+		for (let i = 0; i<strSplit.length; i++) {
+			strSplit[i] = strSplit[i].charAt(0).toUpperCase() + strSplit[i].substring(1);
 		}
-		return splitStr.join(' ');
+		return strSplit.join(' ');
 	}
 
 	overallRating(animalRatings) {
 		let ratingSum = 0;
 		animalRatings.forEach(rating => ratingSum += rating.score);
 		let overallRating = ratingSum/(animalRatings.length)
-		return `Overall Rating ${overallRating}`;
+		return overallRating;
 	}
 
 	ratingScore(ratings, filterStr) {
-		let matchingKey;
-
-		for (let i=0; i<ratings.length; i++) {
-			let keys = Object.keys(ratings[i]);
-			matchingKey = keys.indexOf(filterStr) !== -1
-		}
-		console.log('matching key: ', matchingKey);
-		// let myKeys = Object.keys(myObject)
-		// console.log('filtered rating: ', ratings.filter(rating => rating.score === filterStr).score);
-		// return rating.filter(rating => rating.score === filterStr).score;
+		let score = ratings.filter(rating => rating.type === filterStr)[0].score;
+		return <span>{`${score}/5`}</span>;
 	}
 
 	render() {
@@ -100,6 +91,9 @@ class Animals extends PureComponent {
 							</li>
 							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.closeDropdown(e, 'Price Ascending')}>
 								<div>Price Ascending</div>
+							</li>
+							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.closeDropdown(e, 'Default Sort')}>
+								<div>Default Sort</div>
 							</li>
 						</ul>
 					</section>
@@ -134,20 +128,27 @@ class Animals extends PureComponent {
 							</div>
 						<div className={[animal.species === 'cat' ? `${styles.catColor}` : `${styles.dogColor}`, `${styles.bottomCardContainer}`].join(' ')}>
 							<div className={`${styles.petStats}`}>
-								<h5>{this.overallRating(animal.ratings)}</h5>
-								{/* <h5>{`Overall Rating ${this.overallRating(animal.ratings)}`} </h5> */}
-
-								{/* { animal.ratings.map(rating => (
-									{ rating.
-									}
-								))} */}
-
-								<p>GOOD WITH KIDS {() => this.ratingScore(animal.ratings, 'children')} </p>
-								<p>ENERGY LEVEL {animal.ratings[1].score}</p>
-								<p>HOUSE BROKEN {animal.ratings[2].score}</p>
-								<p>GOOD WITH PETS {animal.ratings[3].score}</p>
+								<div>
+									<h5>Overall Rating {this.overallRating(animal.ratings)}</h5>
+									<div>
+										<p>GOOD WITH KIDS</p>
+										<span>{this.ratingScore(animal.ratings, 'children')}</span>
+									</div>
+									<div>
+										<p>ENERGY LEVEL</p>
+										<span>{this.ratingScore(animal.ratings, 'energy')}</span>
+									</div>
+									<div>
+										<p>HOUSE BROKEN</p>
+										<span>{this.ratingScore(animal.ratings, 'housebroken')}</span>
+									</div>
+									<div>
+										<p>GOOD WITH PETS</p>
+										<span>{this.ratingScore(animal.ratings, 'pets')}</span>
+									</div>
+								</div>
 							</div>
-							<div className={`panel borders hello hi`}>{JSON.stringify(animal, null, 2)}</div>
+							{/* <div className={`panel borders hello hi`}>{JSON.stringify(animal, null, 2)}</div> */}
 						</div>
 					</section>
 				))}

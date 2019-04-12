@@ -4,10 +4,6 @@
   padding: 15px;
 }
 
-.flexRowReverse {
-  flex-direction: row-reverse;
-}
-
 .topCardContainer {
 	border-bottom: 1px solid #DEDECB;
 	padding: 15px 15px;
@@ -77,19 +73,20 @@
   word-wrap: break-word;
   background-color: white;
   border: 1px solid #CACACA;
-  margin-bottom: 30px;
+	margin-bottom: 30px;
+	border-radius: .25rem;
 }
 
 .dropdownOptions {
 	width: 100%;
-	border: transparent 1px solid;
+	border: #CACACA 1px solid;
   display: flex;
   align-items: center;
-  // justify-content: space-between;
-  background: #ffffff;
-  height: 40px;
+  background: $button-blue;
+	line-height: 1.5;
   cursor: pointer;
-  box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 5px 5px -3px rgba(0,0,0,0.2);
+	box-shadow: 0 8px 10px 1px rgba(0,0,0,0.14), 0 5px 5px -3px rgba(0,0,0,0.2);
+	color: white;
 }
 
 .dropdownContainer {
@@ -111,6 +108,30 @@
 	height: 77px;
 }
 
+.petStats {
+	display: flex;
+	justify-content: center;
+	>div {
+		width: 58%;
+		>h5 {
+			font-size: 20px;
+			margin: 0 0 15px 0;
+			font-weight: 600;
+			text-decoration: underline;
+		}
+		>div {
+			display: flex;
+			justify-content: space-between;
+			>p {
+				font-size: 16px;
+				margin: 0 0 15px 0px;
+			}
+			>span {
+				font-weight: 600;
+			}
+		}
+	}
+}
 
 @media (min-width: 30em) {
 	.bodyContainer {
@@ -141,12 +162,6 @@
 		flex-direction: row;
 	}
 
-	// .imgBorder {
-	// 	border: 1px solid black;
-	// 	height: 60px;
-	// 	width: 60px;
-	// }
-
 	.topCardContainer {
 		width: 66.66%;
 		border-bottom: 1px solid #DEDECB;
@@ -158,5 +173,11 @@
 		padding: 15px 15px;
 		display: flex;
 		justify-content: center;
+	}
+
+	.petStats {
+		>div {
+			width: 100%;
+		}
 	}
 }
