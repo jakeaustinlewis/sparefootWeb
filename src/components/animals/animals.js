@@ -27,7 +27,7 @@ class Animals extends PureComponent {
 				<div>
 				<h1>Animal Adoption Center</h1>
 				{this.props.animals.map((animal, index) => (
-					<section key={index} className={`${styles.card}`}>
+					<section key={index} className={[animal.species === 'cat' ? `${styles.catRowDirection}` : `${styles.dogRowDirection}`, `${styles.card}`].join(' ')}>
 							<div className={`${styles.topCardContainer}`}>
 								<div className='row'>
 									<div className='col'>
@@ -35,8 +35,7 @@ class Animals extends PureComponent {
 									</div>
 									<div className='col'>
 										<div className={styles.petName}>
-											{/* <h4 className={``}>{`${animal.name.charAt(0).toUpperCase()}${animal.name.slice(1)}`}</h4> */}
-											<h4 className={``}>{this.capitolize(animal.name)}</h4>
+											<h4>{this.capitolize(animal.name)}</h4>
 											<p>{this.capitolize(animal.gender)}</p>
 											<p>{this.capitolize(animal.breed)}</p>
 											<p>{`${Math.floor(animal.age)} year, ${Math.floor((animal.age - Math.floor(animal.age))*12)}, months`}</p>
@@ -44,10 +43,11 @@ class Animals extends PureComponent {
 									</div>
 								</div>
 								<div className={`${styles.adoptButtonContainer}`}>
-									<button>Adopt {animal.name} today for ${animal.price}</button>
+									<button className={`${styles.adoptButton}`}>Adopt {animal.name} today for ${animal.price}</button>
 								</div>
 							</div>
-						<div className={`${styles.bottomCardContainer}`}>
+						<div className={[animal.species === 'cat' ? `${styles.catColor}` : `${styles.dogColor}`, `${styles.bottomCardContainer}`].join(' ')}>
+
 							<div className={`panel borders hello hi`}>{JSON.stringify(animal, null, 2)}</div>
 						</div>
 					</section>
