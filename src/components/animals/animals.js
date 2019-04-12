@@ -3,20 +3,18 @@ import { connect } from 'react-redux';
 import { getAnimals } from '../../store/animals/actions';
 import styles from './animals.module.scss';
 
-// const dropdownLookUp = {
-//   openEnded: 'age ascending',
-//   multiSelect: 'Checkboxes',
-//   multiChoice: 'Multiple Choice',
-// };
+
 
 class Animals extends PureComponent {
 	constructor(props) {
     super(props);
     this.state = {
 			dropdown: 'Default Sort',
-      clickDropdown: false,
+			clickDropdown: false,
+			// animals: this.props.getAnimals(),
 		};
 		this.handleDropdownClick = this.handleDropdownClick.bind(this);
+		this.ageAscending = this.ageAscending.bind(this);
   }
 	componentDidMount() {
 		document.addEventListener('mousedown', this.handleClickaway, false);
@@ -55,6 +53,15 @@ class Animals extends PureComponent {
 		}, ()=> console.log('state: ',this.state));
 	}
 
+	ageAscending(e) {
+		e.preventDefault();
+    let animals = this.state.animals.slice();
+		// animals.sort();
+		this.setState({ animals: animals.sort() }, ()=> {
+			this.closeDropdown(e, 'Age Ascending');
+		})
+	}
+
 	capitolize(str) {
 		let splitStr = str.toLowerCase().split(' ');
 		for (let i = 0; i<splitStr.length; i++) {
@@ -76,7 +83,7 @@ class Animals extends PureComponent {
 				: (
 					<section className={styles.dropdownSpacing}>
 						<ul className={`${styles.dropdownContainer}`}>
-							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.closeDropdown(e, 'Age Ascending')}>
+							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.ageAscending(e)}>
 								<div>Age Ascending</div>
 							</li>
 							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.closeDropdown(e, 'Weight Ascending')}>
@@ -109,7 +116,6 @@ class Animals extends PureComponent {
 								</div>
 							</div>
 						<div className={[animal.species === 'cat' ? `${styles.catColor}` : `${styles.dogColor}`, `${styles.bottomCardContainer}`].join(' ')}>
-
 							<div className={`panel borders hello hi`}>{JSON.stringify(animal, null, 2)}</div>
 						</div>
 					</section>
