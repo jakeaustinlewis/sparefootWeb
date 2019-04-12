@@ -9,12 +9,11 @@ class Animals extends PureComponent {
 	constructor(props) {
     super(props);
     this.state = {
-			dropdown: 'Default Sort',
+			sortBy: 'Default Sort',
 			clickDropdown: false,
-			// animals: this.props.getAnimals(),
+			animals: [],
 		};
 		this.handleDropdownClick = this.handleDropdownClick.bind(this);
-		this.ageAscending = this.ageAscending.bind(this);
   }
 	componentDidMount() {
 		document.addEventListener('mousedown', this.handleClickaway, false);
@@ -45,21 +44,12 @@ class Animals extends PureComponent {
 
 	}
 
-	closeDropdown(e, dropdownOption) {
+	closeDropdown(e, sortBy) {
 		e.preventDefault();
 		this.setState({
 			clickDropdown: false,
-			dropdown: dropdownOption,
-		}, ()=> console.log('state: ',this.state));
-	}
-
-	ageAscending(e) {
-		e.preventDefault();
-    let animals = this.state.animals.slice();
-		// animals.sort();
-		this.setState({ animals: animals.sort() }, ()=> {
-			this.closeDropdown(e, 'Age Ascending');
-		})
+			sortBy,
+		});
 	}
 
 	capitolize(str) {
@@ -71,19 +61,18 @@ class Animals extends PureComponent {
 	}
 	
 	render() {
-
 		return (
 			<div className={`${styles.bodyContainer}`}>
 				<div>
 				<h1>Animal Adoption Center</h1>
 				{ !this.state.clickDropdown
 				? (
-					<button ref={this.props.onMounted} onClick={(e) => this.handleDropdownClick(e)} className={`${styles.dropdownButton}`}>{this.state.dropdown}</button>
+					<button ref={this.props.onMounted} onClick={(e) => this.handleDropdownClick(e)} className={`${styles.dropdownButton}`}>{this.state.sortBy}</button>
 				)
 				: (
 					<section className={styles.dropdownSpacing}>
 						<ul className={`${styles.dropdownContainer}`}>
-							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.ageAscending(e)}>
+							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.closeDropdown(e, 'Age Ascending')}>
 								<div>Age Ascending</div>
 							</li>
 							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.closeDropdown(e, 'Weight Ascending')}>
@@ -95,7 +84,15 @@ class Animals extends PureComponent {
 						</ul>
 					</section>
 				)}
-				{this.props.animals.map((animal, index) => (
+				{ this.props.animals.sort((animalOne, animalTwo)=> {
+						if(this.state.sortBy === 'Age Ascending'){
+							return animalOne.age - animalTwo.age;
+						} else if(this.state.sortBy === 'Weight Ascending') {
+							return animalOne.weight - animalTwo.weight;
+						} else if(this.state.sortBy === 'Price Ascending') {
+							return animalOne.price - animalTwo.price;
+						} else return animalOne;
+				}).map((animal, index) => (
 					<section key={index} className={[animal.species === 'cat' ? `${styles.catRowDirection}` : `${styles.dogRowDirection}`, `${styles.card}`].join(' ')}>
 							<div className={`${styles.topCardContainer}`}>
 								<div className='row'>
@@ -116,7 +113,14 @@ class Animals extends PureComponent {
 								</div>
 							</div>
 						<div className={[animal.species === 'cat' ? `${styles.catColor}` : `${styles.dogColor}`, `${styles.bottomCardContainer}`].join(' ')}>
-							<div className={`panel borders hello hi`}>{JSON.stringify(animal, null, 2)}</div>
+							<div className={`${styles.petStats}`}>
+								<h5>Overall Rating</h5>
+								<p>GOOD WITH KIDS </p>
+								<p>ENERGY LEVEL</p>
+								<p>HOUSE BROKEN</p>
+								<p>GOOD WITH PETS</p>
+							</div>
+							{/* <div className={`panel borders hello hi`}>{JSON.stringify(animal, null, 2)}</div> */}
 						</div>
 					</section>
 				))}
