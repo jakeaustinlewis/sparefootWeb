@@ -68,7 +68,61 @@ class Animals extends PureComponent {
 
 	ratingScore(ratings, filterStr) {
 		let score = ratings.filter(rating => rating.type === filterStr)[0].score;
-		return <span>{`${score}/5`}</span>;
+		return `${score}/5`;
+	}
+
+	averageProperty(animals, key) {
+		if (key === 'overallRatings') {
+			let sumOverallRating = animals.reduce((sum, value) => sum + this.overallRating(value.ratings), 0);
+			return sumOverallRating /animals.length;
+		}
+		let sum = animals.reduce((sum, value) => sum + value[key], 0);
+		return sum/animals.length;
+	}
+
+	sortNumberically(animalOne, animalTwo) {
+		if(this.state.sortBy === 'Age Ascending'){
+			return animalOne.age - animalTwo.age;
+		} else if(this.state.sortBy === 'Weight Ascending') {
+			return animalOne.weight - animalTwo.weight;
+		} else if(this.state.sortBy === 'Price Ascending') {
+			return animalOne.price - animalTwo.price;
+		} else if(this.state.sortBy === 'Recommended') {
+
+			let animals = this.props.animals.slice();
+			let cats = animals.filter(animal => animal.species === 'cat');
+			let dogs = animals.filter(animal => animal.species === 'dog');
+
+			let avgCat = {};
+			let avgDog = {};
+
+			// Find average cat properties
+			avgCat.age = this.averageProperty(cats, 'age');
+			avgCat.price = this.averageProperty(cats, 'price');
+			avgCat.weight = this.averageProperty(cats, 'weight');
+			avgCat.overallRating = this.averageProperty(cats, 'overallRatings');
+
+			// Find average dog properties
+			avgDog.age = this.averageProperty(dogs, 'age');
+			avgDog.price = this.averageProperty(dogs, 'price');
+			avgDog.weight = this.averageProperty(dogs, 'weight');
+			avgDog.overallRating = this.averageProperty(dogs, 'overallRatings');
+
+			// Find weighted score
+			let wAnimalOne = this.weightedScore(animalOne, animalOne.species === 'cat' ? avgCat : avgDog);
+			let wAnimalTwo = this.weightedScore(animalTwo, animalTwo.species === 'cat' ? avgCat : avgDog);
+
+			return wAnimalTwo - wAnimalOne;
+
+		} else return animalOne;
+	}
+
+	weightedScore(animal, avgAnimal) {
+		let oneWPrice = 1.2*animal.price/avgAnimal.price;
+		let oneWAge = 1.1*animal.age/avgAnimal.age;
+		let oneWWeight = animal.weight/avgAnimal.weight;
+		let oneWOverallRating = this.overallRating(animal.ratings)/avgAnimal.overallRating;
+		return oneWPrice + oneWAge - oneWWeight + oneWOverallRating;
 	}
 
 	render() {
@@ -77,35 +131,30 @@ class Animals extends PureComponent {
 				<div>
 				<h1>Animal Adoption Center</h1>
 				{ !this.state.clickDropdown
-				? (
-					<button ref={this.props.onMounted} onClick={(e) => this.handleDropdownClick(e)} className={`${styles.dropdownButton}`}>{this.state.sortBy}</button>
-				)
+				? <button ref={this.props.onMounted} onClick={(e) => this.handleDropdownClick(e)} className={`${styles.dropdownButton}`}>{this.state.sortBy}</button>
 				: (
 					<section className={styles.dropdownSpacing}>
 						<ul className={`${styles.dropdownContainer}`}>
-							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.closeDropdown(e, 'Age Ascending')}>
+							<li onClick={(e) => this.closeDropdown(e, 'Age Ascending')}>
 								<div>Age Ascending</div>
 							</li>
-							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.closeDropdown(e, 'Weight Ascending')}>
+							<li onClick={(e) => this.closeDropdown(e, 'Weight Ascending')}>
 								<div>Weight Ascending</div>
 							</li>
-							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.closeDropdown(e, 'Price Ascending')}>
+							<li onClick={(e) => this.closeDropdown(e, 'Price Ascending')}>
 								<div>Price Ascending</div>
 							</li>
-							<li className={`${styles.dropdownOptions}`} onClick={(e) => this.closeDropdown(e, 'Default Sort')}>
+							<li onClick={(e) => this.closeDropdown(e, 'Recommended')}>
+								<div>Recommended</div>
+							</li>
+							<li onClick={(e) => this.closeDropdown(e, 'Default Sort')}>
 								<div>Default Sort</div>
 							</li>
 						</ul>
 					</section>
 				)}
-				{ this.props.animals.sort((animalOne, animalTwo)=> {
-						if(this.state.sortBy === 'Age Ascending'){
-							return animalOne.age - animalTwo.age;
-						} else if(this.state.sortBy === 'Weight Ascending') {
-							return animalOne.weight - animalTwo.weight;
-						} else if(this.state.sortBy === 'Price Ascending') {
-							return animalOne.price - animalTwo.price;
-						} else return animalOne;
+				{ this.props.animals.sort((animalOne, animalTwo) => {
+					return this.sortNumberically(animalOne, animalTwo);
 				}).map((animal, index) => (
 					<section key={index} className={[animal.species === 'cat' ? `${styles.catRowDirection}` : `${styles.dogRowDirection}`, `${styles.card}`].join(' ')}>
 							<div className={`${styles.topCardContainer}`}>
@@ -118,12 +167,12 @@ class Animals extends PureComponent {
 											<h4>{this.capitolize(animal.name)}</h4>
 											<p>{this.capitolize(animal.gender)}</p>
 											<p>{this.capitolize(animal.breed)}</p>
-											<p>{`${Math.floor(animal.age)} year, ${Math.floor((animal.age - Math.floor(animal.age))*12)}, months`}</p>
+											<p>{`${Math.floor(animal.age)} year, ${Math.floor((animal.age - Math.floor(animal.age))*12)} months`}</p>
 										</div>
 									</div>
 								</div>
 								<div className={`${styles.adoptButtonContainer}`}>
-									<button className={`${styles.adoptButton}`}>Adopt {animal.name} today for ${animal.price}</button>
+									<button>Adopt {animal.name} today for ${animal.price}</button>
 								</div>
 							</div>
 						<div className={[animal.species === 'cat' ? `${styles.catColor}` : `${styles.dogColor}`, `${styles.bottomCardContainer}`].join(' ')}>
@@ -148,7 +197,9 @@ class Animals extends PureComponent {
 									</div>
 								</div>
 							</div>
+							{/* <div className={`panel borders hello hi`}>{this.weightedScore(animal, animal.species === 'cat' ? this.state.avgCat : this.state.avgDog)}</div> */}
 							{/* <div className={`panel borders hello hi`}>{JSON.stringify(animal, null, 2)}</div> */}
+
 						</div>
 					</section>
 				))}
