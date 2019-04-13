@@ -20,7 +20,8 @@ class Animals extends PureComponent {
 	}
 
 	handleDropdownClick(e) {
-		this.setState({ clickDropdown: true }, ()=> console.log('dropdown: ',this.state.clickDropdown));
+		e.preventDefault();
+		this.setState({ clickDropdown: true });
 	}
 
 	closeDropdown(e, sortBy) {
@@ -60,7 +61,7 @@ class Animals extends PureComponent {
 		return sum/animals.length;
 	}
 
-	sortNumberically(animalOne, animalTwo) {
+	sortByDropdown(animalOne, animalTwo) {
 		if(this.state.sortBy === 'Age Ascending'){
 			return animalOne.age - animalTwo.age;
 		} else if(this.state.sortBy === 'Weight Ascending') {
@@ -98,11 +99,11 @@ class Animals extends PureComponent {
 	}
 
 	weightedScore(animal, avgAnimal) {
-		let oneWPrice = 1.2*animal.price/avgAnimal.price;
-		let oneWAge = 1.1*animal.age/avgAnimal.age;
-		let oneWWeight = animal.weight/avgAnimal.weight;
-		let oneWOverallRating = this.overallRating(animal.ratings)/avgAnimal.overallRating;
-		return oneWPrice + oneWAge - oneWWeight + oneWOverallRating;
+		let wPrice = 1.2*animal.price/avgAnimal.price;
+		let wAge = 1.1*animal.age/avgAnimal.age;
+		let wWeight = animal.weight/avgAnimal.weight;
+		let wOverallRating = this.overallRating(animal.ratings)/avgAnimal.overallRating;
+		return wPrice + wAge - wWeight + wOverallRating;
 	}
 
 	render() {
@@ -134,7 +135,7 @@ class Animals extends PureComponent {
 					</section>
 				)}
 				{ this.props.animals.sort((animalOne, animalTwo) => {
-					return this.sortNumberically(animalOne, animalTwo);
+					return this.sortByDropdown(animalOne, animalTwo);
 				}).map((animal, index) => (
 					<section key={index} className={[animal.species === 'cat' ? `${styles.catRowDirection}` : `${styles.dogRowDirection}`, `${styles.card}`].join(' ')}>
 							<div className={`${styles.topCardContainer}`}>
@@ -177,9 +178,6 @@ class Animals extends PureComponent {
 									</div>
 								</div>
 							</div>
-							{/* <div className={`panel borders hello hi`}>{this.weightedScore(animal, animal.species === 'cat' ? this.state.avgCat : this.state.avgDog)}</div> */}
-							{/* <div className={`panel borders hello hi`}>{JSON.stringify(animal, null, 2)}</div> */}
-
 						</div>
 					</section>
 				))}
