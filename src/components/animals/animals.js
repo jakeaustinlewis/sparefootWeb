@@ -16,27 +16,7 @@ class Animals extends PureComponent {
 	}
 
 	componentDidMount() {
-		document.addEventListener('mousedown', this.handleClickaway, false);
 		this.props.getAnimals();
-	}
-
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickaway, false);
-	}
-
-	handleClickaway(e) {
-    // let clickedDropDown = false;
-    // const refValues = Object.values(this.refs);
-    // refValues.forEach(button => {
-    //   if (button.contains(e.target)) {
-    //     clickedDropDown = true;
-    //   }
-    // });
-
-    // if (!clickedDropDown) {
-    //   this.setState({ clickDropdown: false });
-		// }
-		console.log('refs: ', this.refs);
 	}
 
 	handleDropdownClick(e) {
